@@ -5,6 +5,7 @@ void basic_find_max();
 void leetcode_shuffle_lists();
 void basic_pointer_usage();
 void baisc_call_by_valye_referece();
-
+void leetcode_sorting_sorted_arrays();
+void basic_string_usage();
 
 
