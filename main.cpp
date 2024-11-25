@@ -62,7 +62,139 @@ int main() {
   }
 }
 
-void basic_vector_usage() {}
+void basic_vector_usage() {
+  // static array
+  {
+    int a[5] = {5, 1, 2, 4, 3};
+    //        |  |  |  |  |
+  }
+  // dynamic array / container
+  {
+    vector<int> a = {5, 1, 2, 4, 3};
+    for (int i = 0; i < a.size(); i++) {
+      printf("%d ", a[i]);
+    }
+    printf("\n");
+  }
+
+  // https://cplusplus.com/reference/vector/vector/?kw=vector
+  // .size() : number of elements
+  //     .empty() : return boolean - true : empty, false: not empty()
+  // .push_back(element) : push a new element to the last position
+  // .pop_back() : pop out the last element
+  // .front() : the first reference
+  // .back() : the last reference
+
+  // .begin() : the first iterator
+  // .end() : the last iterator
+
+  // .erase(iterator pos) : delete the element with the iterator position
+  // .insert(iterator pos, element) : insert the "element" to the "iterator pos"
+  // .insert(iterator pos, source starting iterator, source ending iterator)
+
+  printf("=== push_back() === \n");
+  {
+    vector<int> a;
+    printf("a size = %d\n", (int)a.size());
+
+    vector<float> f;
+    f.push_back(1.2);
+
+    int val = 10;
+    a.push_back(val);
+    a.push_back(0);
+    printf("a size = %d\n", (int)a.size());
+    for (int i = 0; i < a.size(); i++) {
+      printf("%d ", a[i]);
+    }
+    printf("\n");
+  }
+  printf("=== front(), back() ====\n");
+  {
+    vector<int> a = {4, 5, 1, 2};
+    printf("the first element = %d\n", a.front());
+    printf("the last element = %d\n", a.back());
+
+    a.back() = 0;
+    for (int i = 0; i < a.size(); i++) {
+      printf("%d ", a[i]);
+    }
+    printf("\n");
+  }
+  printf("=== iterator, begin(), end()=====\n");
+  {
+    vector<int> a = {3, 1, 5, 4, 2};
+    //   iterator  |  |  |  |  |  |
+    //             ^ begin()      ^ .end()
+
+    printf("the first element : %d\n", *(a.begin()));
+    printf("the last element : %d\n", *(a.end() - 1));
+  }
+
+  printf("===== loop ====\n");
+  {
+    vector<int> a = {3, 1, 5, 4, 2};
+    //   iterator  |  |  |  |  |  |
+    //             ^ begin()      ^ .end()
+
+    vector<int>::iterator it;
+    for (it = a.begin(); it != a.end(); it++) {
+      printf("%d ", *it);
+    }
+    printf("\n");
+
+    // auto
+    int x = 5;
+    auto y = x;
+  }
+
+  printf("===== loop v2====\n");
+  {
+    vector<int> a = {3, 1, 5, 4, 2};
+    //   iterator  |  |  |  |  |  |
+    //             ^ begin()      ^ .end()
+
+    for (auto it = a.begin(); it != a.end(); it++) {
+      printf("%d ", *it);
+    }
+    printf("\n");
+  }
+
+  printf("===== loop v3====\n"); // after 2017
+  {
+    vector<int> a = {3, 1, 5, 4, 2};
+    //   iterator  |  |  |  |  |  |
+    //             ^ begin()      ^ .end()
+    for (int &x : a) {
+      printf("%d ", x);
+    }
+    printf("\n");
+  }
+
+  printf("=== erase(), insert()======\n");
+  {
+    vector<int> a = {3, 1, 5, 4, 2};
+    //   iterator  |  |  |  |  |  |
+    //             ^ begin()      ^ .end()
+    a.insert(a.begin() + 2, 0);
+    for (auto &x : a)
+      printf("%d ", x);
+    printf("\n");
+
+    a.erase(a.begin());
+    for (auto &x : a)
+      printf("%d ", x);
+    printf("\n");
+
+    a.pop_back();
+    for (auto &x : a)
+      printf("%d ", x);
+    printf("\n");
+
+    vector<int> b = {0, 9, 1};
+    a.insert(a.end(), b.begin(), b.end());
+  }
+}
 
 int getMaxAlternatingStringLength(int k, string in) {
   // TBD
@@ -348,13 +480,48 @@ void leetcode_shuffle_lists() {
 void leetcode_sorting_sorted_arrays() {
   // Q: two sorted arrays, a and b, combine a and b to c as a sorted array as
   // well.
-  int a[6] = {4, 6, 7, 10, 15, 16};
-  int b[8] = {0, 1, 2, 8, 12, 13, 19, 20};
-  int aSize = 6;
-  int bSize = 8;
-  int c[14];
-  // Expected c= {0, 1, 2, 4, 6, 7, 8, 10, 12, 13, 15, 16, 19, 20}
-  // HW1107
+  {
+    int a[6] = {4, 6, 7, 10, 15, 16};
+    int b[8] = {0, 1, 2, 8, 12, 13, 19, 20};
+    int aSize = 6;
+    int bSize = 8;
+    int c[14];
+    int cSize = aSize + bSize;
+    // Expected c= {0, 1, 2, 4, 6, 7, 8, 10, 12, 13, 15, 16, 19, 20}
+    // HW1107
+    // HW1125 : bugfix
+
+    int ia = 0;
+    int ib = 0;
+    int ic = 0;
+
+    while (ib < bSize || ia < aSize) {
+      if (ia < aSize && a[ia] < b[ib]) {
+        c[ic] = a[ia];
+        ic++;
+        ia++;
+      }
+
+      if (ib < bSize && a[ia] > b[ib]) {
+        c[ic] = b[ib];
+        ic++;
+        ib++;
+      }
+    }
+    for (int i = 0; i < cSize; i++) {
+      printf("%d ", c[i]);
+    }
+    printf("\n");
+  }
+
+  //C++ : HW1125
+  {
+    vector<int> a = {4, 6, 7, 10, 15, 16};
+    vector<int> b = {0, 1, 2, 8, 12, 13, 19, 20};
+    vector<int> c;
+    
+
+  }
 }
 
 void basic_swap() {
