@@ -1,13 +1,17 @@
+#include "includes.h"
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <cstring>
-#include "includes.h"
+#include <iostream>
+#include <string>
+#include <vector>
 
 // information : Google
 //  cplusplus.com <= dictionary
 //  geeksforgeeks <= examples
 //  stackoverflow <= Q&A
+
+using namespace std;
 
 int main() {
   int testID = 10;
@@ -41,32 +45,103 @@ int main() {
     baisc_call_by_valye_referece();
     break;
   case 10:
+    basic_vector_usage();
+    break;
+  case 11:
     basic_string_usage();
+    break;
+  case 12:
+    leetcode_letters_histogram();
+    break;
+  case 14:
+    leetcode_alternating_strings();
     break;
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
 }
-void basic_string_usage()
-{
-  //ASCII -> 8-bit -> char
-  // unsigned char : [0- 255] 
-  //          char : [-128, 127]
+
+void basic_vector_usage() {}
+
+int getMaxAlternatingStringLength(int k, string in) {
+  // TBD
+  return -1;
+}
+
+void leetcode_alternating_strings() {
+  // k-alternating string:
+  //          StRiNg => 1-alternating string
+  //          heLLow => 2-alternating string
+  //          aBBaaa => NOT alternating string
+  //          aaaAAbbCCCC => NOT alternating string
+
+  // Q: Given k and a string, find the maximum sub-string length which matches
+  // k-alternating string condition. Example:
+  //       Given k = 2, string = "aBBaaa" => the maximum k-alternating string is
+  //       BBaa, Answer:  4 Given k= 1, string = "BaBaBB" => the maximum
+  //       k-alternating string is BaBaB, Anser : 5
+
+  string in;
+  int k;
+  int maxLen;
+
+  k = 1;
+  in = "aBBdaaa";
+  maxLen = getMaxAlternatingStringLength(k, in);
+  printf("k=%d, string is %s => max len = %d (ans: 2)\n", k, in.c_str(),
+         maxLen);
+
+  k = 3;
+  in = "DDaasAAbbCC";
+  maxLen = getMaxAlternatingStringLength(k, in);
+  printf("k=%d, string is %s => max len = %d (ans: 3)\n", k, in.c_str(),
+         maxLen);
+
+  k = 2;
+  in = "aafAXbbCDCCC";
+  maxLen = getMaxAlternatingStringLength(k, in);
+  printf("k=%d, string is %s => max len = %d (ans: 8)\n", k, in.c_str(),
+         maxLen);
+
+  k = 3;
+  in = "DDaaAAbbCC";
+  maxLen = getMaxAlternatingStringLength(k, in);
+  printf("k=%d, string is %s => max len = %d (ans: 0)\n", k, in.c_str(),
+         maxLen);
+}
+
+void leetcode_letters_histogram() {
+
+  // Q : print out the histogram of alphbet apperance with alphbet order.
+  //
+  //   NOTE: non-existence and non-alphabet shall not be printed
+  //
+  // Example: "a; b69ad*b%a^a;"
+  //     a : 4
+  //     b : 2
+  //     d : 1
+
+  //  string word = "as;lkdjfha.. al;kshjdf;laikhs;dflk jkl;j!";
+  // TBD
+}
+
+void basic_string_usage() {
+  // ASCII -> 8-bit -> char
+  //  unsigned char : [0- 255]
+  //           char : [-128, 127]
 
   char name[] = "John"; //{'J', 'o', 'h', 'n', '\0'}
-  char tmp[8]; //{'J', 'o', 'h', 'n', '\0', X, 'Z', 'Z'}
+  char tmp[8];          //{'J', 'o', 'h', 'n', '\0', X, 'Z', 'Z'}
 
-  //loop
+  // loop
 
-  //strcpy(dest address, source address)
+  // strcpy(dest address, source address)
   strcpy(tmp, name);
   printf("%s", tmp);
 
-  //TBV : C++
-  
+  // TBV : C++
 }
-
 
 int addab(int a, int b) {
 
@@ -77,11 +152,9 @@ int addab(int a, int b) {
 
 void addabWithc(int x, int y, int *z) { *z = x + y; }
 
-void addabPointers(int* x, int* y, int* z) { *z = *x + *y; }
+void addabPointers(int *x, int *y, int *z) { *z = *x + *y; }
 
-void addabRef(int x, int y, int& z){
-  z= x+y;
-}
+void addabRef(int x, int y, int &z) { z = x + y; }
 
 void baisc_call_by_valye_referece() {
 
@@ -110,18 +183,17 @@ void baisc_call_by_valye_referece() {
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
   // call-by-reference , using "reference"
-  a= 7;
-  b= 3;
-  c= -1;
+  a = 7;
+  b = 3;
+  c = -1;
   addabRef(a, b, c);
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
-  int& q = a;
+  int &q = a;
   q = 2;
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
-//  int& k; <== error by complier
-
+  //  int& k; <== error by complier
 }
 
 void basic_pointer_usage() {

@@ -7,5 +7,6 @@ void basic_pointer_usage();
 void baisc_call_by_valye_referece();
 void leetcode_sorting_sorted_arrays();
 void basic_string_usage();
-
-
+void leetcode_letters_histogram();
+void basic_vector_usage();
+void leetcode_alternating_strings();
