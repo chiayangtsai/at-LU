@@ -495,19 +495,25 @@ void leetcode_sorting_sorted_arrays() {
     int ib = 0;
     int ic = 0;
 
-    while (ib < bSize || ia < aSize) {
-      if (ia < aSize && a[ia] < b[ib]) {
+  while (ib < bSize || ia < aSize) {
+    if (ia < aSize) {
+      if (a[ia]< b[ib])
+      {
         c[ic] = a[ia];
         ic++;
         ia++;
       }
+    }
 
-      if (ib < bSize && a[ia] > b[ib]) {
+    if (ib < bSize) {
+      if (a[ia]> b[ib])
+      {
         c[ic] = b[ib];
         ic++;
         ib++;
-      }
     }
+  }
+  }
     for (int i = 0; i < cSize; i++) {
       printf("%d ", c[i]);
     }
