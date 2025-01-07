@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 10;
+  int testID = 7;
 
   switch (testID) {
   case 0:
@@ -38,16 +38,16 @@ int main() {
   case 7:
     leetcode_sorting_sorted_arrays();
     break;
-  case 8:
+  case 8: //pointer
     basic_pointer_usage();
     break;
   case 9:
     baisc_call_by_valye_referece();
     break;
-  case 10:
+  case 10: //vector
     basic_vector_usage();
     break;
-  case 11:
+  case 11: //string
     basic_string_usage();
     break;
   case 12:
@@ -60,6 +60,37 @@ int main() {
     printf("not a supported testID %d", testID);
     exit(-1);
   }
+  //--- entry-level
+  //leetcode - pointer, vector, string
+  //algorithm - sliding window 
+  //digit representation - decimal, binary
+  //pair
+  //unordered_map - look-up table (LUT), Hash Table => unordered_set
+  //leetcode = two sum
+  //recursive (easy) - fibanacci
+  //algorithm - greedy
+  //sort() (standard)
+  //map : key-sorted map => set
+  //leetcodes (easy) - 5-6 coding algorithm
+  //binary tree- Breadth-First (BF) creation
+  //(optional)- small project - candy crash
+
+  
+  //--- mid-level -- (data structure and simple recursive algorithm)
+  //binary tree- depth-first (DF) creation
+  //binary tree - DF traversal : pre-order, in-order, post-order
+  // DFS, BFS algorithm
+  // sort- heap sort, quick sort, merge sort (tech)
+  // recursive algorithm (mid)
+  // (optional) regular expression
+
+  //-- expereinced-level --
+  // Linked list 
+  // Hash table
+  // dynamic programming
+  // string/vector processing
+  // miscs..
+  
 }
 
 void basic_vector_usage() {
@@ -388,6 +419,19 @@ void basic_pointer_usage() {
     }
     printf("\n");
   }
+
+  /*
+  object.method()
+
+  pointer = object memory address (key)
+
+  (*pointer).method()
+  === equivalent
+  pointer->method()
+  
+  
+  */
+  
 }
 
 void leetcode_shuffle_lists() {
@@ -520,13 +564,107 @@ void leetcode_sorting_sorted_arrays() {
     printf("\n");
   }
 
-  //C++ : HW1125
+  // C++ : HW1125
   {
     vector<int> a = {4, 6, 7, 10, 15, 16};
     vector<int> b = {0, 1, 2, 8, 12, 13, 19, 20};
     vector<int> c;
-    
 
+    int ia = 0;
+    int ib = 0;
+    int ic = 0;
+    int aSize = a.size();
+    int bSize = b.size();
+    int cSize = aSize + bSize;
+    c.resize(cSize);
+
+    while (ib < bSize && ia < aSize) {
+      if (ia < aSize) {
+        if (a[ia] < b[ib]) {
+          c[ic] = a[ia];
+          ic++;
+          ia++;
+        }
+      }
+
+      if (ib < bSize) {
+        if (a[ia] > b[ib]) {
+          c[ic] = b[ib];
+          ic++;
+          ib++;
+        }
+      }
+    }
+
+    if(ia < aSize){
+      //append the rest of "a" to c
+      for(int i= ia; i< aSize; i++){
+        c[ic] = a[i];
+        ic++;
+      }
+    }
+
+    if(ib < bSize){
+      //append therest of "b" to c
+      for(int i= ib; i< bSize; i++){
+        c[ic] = b[i];
+        ic++;
+      }
+    }
+  }
+  /*
+          (condition)?(satisfied case):(not satisifed case)
+  
+          m;
+          k = 5
+          if(k==5)
+          {
+            m = 5
+          }
+          else
+          {
+            m = -1;
+          }
+
+          ===
+
+          m= (k==5)?(5):(-1)
+
+  */
+  printf("== use vector methods ===\n");
+  {
+    vector<int> a = {4, 6, 7, 10, 15, 16};
+    vector<int> b = {0, 1, 2, 8, 12, 13, 19, 20};
+    vector<int> c;
+
+    while(!a.empty() || !b.empty()){
+      //choose a or b  => x
+      // vector<int>* x= &a;
+      // if(a.empty()) x = &b;
+      // else if (b.empty()) {}
+      // else if(b.front() < a.front()) x= &b;
+      
+      // vector<int>* x = &b;
+      // if(b.empty()) x = &a;
+      // else if (a.empty()) {}
+      // else if(a.front() < b.front()) x= &a;
+
+      vector<int>* x = nullptr;
+      if(a.empty()) x = &b;
+      else if(b.empty()) x = &a;
+      else{
+        x = (a.front() < b.front())? (&a) : (&b);
+      }
+      
+      // push x[0] to c
+      // x.erase(head)
+      c.push_back(x->front());
+      x->erase(x->begin());
+      
+    }
+
+    for(auto& ir : c) printf("%d ", ir);
+    printf("\n");
   }
 }
 
