@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 7;
+  int testID = 9;
 
   switch (testID) {
   case 0:
@@ -38,59 +38,42 @@ int main() {
   case 7:
     leetcode_sorting_sorted_arrays();
     break;
-  case 8: //pointer
+  case 8: // pointer
     basic_pointer_usage();
     break;
   case 9:
     baisc_call_by_valye_referece();
     break;
-  case 10: //vector
-    basic_vector_usage();
-    break;
-  case 11: //string
-    basic_string_usage();
-    break;
-  case 12:
-    leetcode_letters_histogram();
-    break;
-  case 14:
-    leetcode_alternating_strings();
-    break;
+
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
-  //--- entry-level
-  //leetcode - pointer, vector, string
-  //algorithm - sliding window 
-  //digit representation - decimal, binary
-  //pair
-  //unordered_map - look-up table (LUT), Hash Table => unordered_set
-  //leetcode = two sum
-  //recursive (easy) - fibanacci
-  //algorithm - greedy
-  //sort() (standard)
-  //map : key-sorted map => set
-  //leetcodes (easy) - 5-6 coding algorithm
-  //binary tree- Breadth-First (BF) creation
-  //(optional)- small project - candy crash
+  //--- basic-level (< 7 classes)
+  // pointer
+  // string- C, C++
+  // algorithm - sliding window
+  // struct => class (light)
+  // pair
+  // unordered_map - look-up table (LUT), Hash Table => unordered_set
+  // leetcode = two sum
+  // digit representation - decimal
+  // digit representation - binary
 
-  
-  //--- mid-level -- (data structure and simple recursive algorithm)
-  //binary tree- depth-first (DF) creation
-  //binary tree - DF traversal : pre-order, in-order, post-order
-  // DFS, BFS algorithm
-  // sort- heap sort, quick sort, merge sort (tech)
-  // recursive algorithm (mid)
-  // (optional) regular expression
+  //<--> 看題庫
 
-  //-- expereinced-level --
-  // Linked list 
-  // Hash table
-  // dynamic programming
-  // string/vector processing
-  // miscs..
-  
+  // recursive programming => dynamic programming
+  // sort() (C++ standard)
+  // map : key-sorted map => set
+  // binary tree- Breadth-First (BF) creation
+
+  //--- leetcode 150 studay -- finish easy-medium before "stack"
+
+  //--- advanced-level;
+  // binary tree- depth-first (DF) creation
+  // binary tree - DF traversal : pre-order, in-order, post-order
+  // Sort- Quick sort
+  //(optional) Heap sort, merge sort
 }
 
 void basic_vector_usage() {
@@ -308,16 +291,25 @@ void basic_string_usage() {
 
 int addab(int a, int b) {
 
-  int c = a + b;
-
-  return c;
+  int x = a + b;
+  return x;
 }
 
-void addabWithc(int x, int y, int *z) { *z = x + y; }
 
-void addabPointers(int *x, int *y, int *z) { *z = *x + *y; }
+void addabNew(int x, int y, int z) // a  b  c
+{
+  z = x + y;
+}
 
-void addabRef(int x, int y, int &z) { z = x + y; }
+void addabPointer(int x, int y, int* z) // a , b, &c
+{ 
+  *z = x + y; 
+}
+
+void addabPointerAlt(int* x, int* y, int* z) // &a , &b, &c
+{ 
+  *z = *x + *y; 
+}
 
 void baisc_call_by_valye_referece() {
 
@@ -329,9 +321,35 @@ void baisc_call_by_valye_referece() {
   a = 5;
   b = 3;
   c = -1;
+
   c = addab(a, b); // call-by-value
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
+  a = 5;
+  b = 3;
+  c = -1;
+
+  addabNew(a, b, c); // call-by-value
+  printf("a= %d, b= %d, c= %d\n", a, b, c);
+
+  a = 5;
+  b = 3;
+  c = -1;
+
+  addabPointer(a, b, &c); //call-by-reference
+  printf("a= %d, b= %d, c= %d\n", a, b, c);
+
+  a = 5;
+  b = 3;
+  c = -1;
+
+  addabPointerAlt(&a, &b, &c); //call-by-reference
+  printf("a= %d, b= %d, c= %d\n", a, b, c);
+
+  //HW0131(VK) : start from here : "reference"
+  
+
+#if 0
   // call-by-reference , using pointer
   a = 5;
   b = 3;
@@ -357,6 +375,7 @@ void baisc_call_by_valye_referece() {
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
   //  int& k; <== error by complier
+#endif
 }
 
 void basic_pointer_usage() {
@@ -428,10 +447,9 @@ void basic_pointer_usage() {
   (*pointer).method()
   === equivalent
   pointer->method()
-  
-  
+
+
   */
-  
 }
 
 void leetcode_shuffle_lists() {
@@ -539,25 +557,23 @@ void leetcode_sorting_sorted_arrays() {
     int ib = 0;
     int ic = 0;
 
-  while (ib < bSize || ia < aSize) {
-    if (ia < aSize) {
-      if (a[ia]< b[ib])
-      {
-        c[ic] = a[ia];
-        ic++;
-        ia++;
+    while (ib < bSize || ia < aSize) {
+      if (ia < aSize) {
+        if (a[ia] < b[ib]) {
+          c[ic] = a[ia];
+          ic++;
+          ia++;
+        }
+      }
+
+      if (ib < bSize) {
+        if (a[ia] > b[ib]) {
+          c[ic] = b[ib];
+          ic++;
+          ib++;
+        }
       }
     }
-
-    if (ib < bSize) {
-      if (a[ia]> b[ib])
-      {
-        c[ic] = b[ib];
-        ic++;
-        ib++;
-    }
-  }
-  }
     for (int i = 0; i < cSize; i++) {
       printf("%d ", c[i]);
     }
@@ -596,17 +612,17 @@ void leetcode_sorting_sorted_arrays() {
       }
     }
 
-    if(ia < aSize){
-      //append the rest of "a" to c
-      for(int i= ia; i< aSize; i++){
+    if (ia < aSize) {
+      // append the rest of "a" to c
+      for (int i = ia; i < aSize; i++) {
         c[ic] = a[i];
         ic++;
       }
     }
 
-    if(ib < bSize){
-      //append therest of "b" to c
-      for(int i= ib; i< bSize; i++){
+    if (ib < bSize) {
+      // append therest of "b" to c
+      for (int i = ib; i < bSize; i++) {
         c[ic] = b[i];
         ic++;
       }
@@ -614,7 +630,7 @@ void leetcode_sorting_sorted_arrays() {
   }
   /*
           (condition)?(satisfied case):(not satisifed case)
-  
+
           m;
           k = 5
           if(k==5)
@@ -637,33 +653,35 @@ void leetcode_sorting_sorted_arrays() {
     vector<int> b = {0, 1, 2, 8, 12, 13, 19, 20};
     vector<int> c;
 
-    while(!a.empty() || !b.empty()){
-      //choose a or b  => x
-      // vector<int>* x= &a;
-      // if(a.empty()) x = &b;
-      // else if (b.empty()) {}
-      // else if(b.front() < a.front()) x= &b;
-      
+    while (!a.empty() || !b.empty()) {
+      // choose a or b  => x
+      //  vector<int>* x= &a;
+      //  if(a.empty()) x = &b;
+      //  else if (b.empty()) {}
+      //  else if(b.front() < a.front()) x= &b;
+
       // vector<int>* x = &b;
       // if(b.empty()) x = &a;
       // else if (a.empty()) {}
       // else if(a.front() < b.front()) x= &a;
 
-      vector<int>* x = nullptr;
-      if(a.empty()) x = &b;
-      else if(b.empty()) x = &a;
-      else{
-        x = (a.front() < b.front())? (&a) : (&b);
+      vector<int> *x = nullptr;
+      if (a.empty())
+        x = &b;
+      else if (b.empty())
+        x = &a;
+      else {
+        x = (a.front() < b.front()) ? (&a) : (&b);
       }
-      
+
       // push x[0] to c
       // x.erase(head)
       c.push_back(x->front());
       x->erase(x->begin());
-      
     }
 
-    for(auto& ir : c) printf("%d ", ir);
+    for (auto &ir : c)
+      printf("%d ", ir);
     printf("\n");
   }
 }
