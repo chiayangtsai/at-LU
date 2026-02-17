@@ -10,3 +10,4 @@ void basic_string_usage();
 void leetcode_letters_histogram();
 void basic_vector_usage();
 void leetcode_alternating_strings();
+void leetcode_pointer_increment();

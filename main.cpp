@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 9;
+  int testID = 11;
 
   switch (testID) {
   case 0:
@@ -44,13 +44,17 @@ int main() {
   case 9:
     baisc_call_by_valye_referece();
     break;
-
+  case 10:
+    basic_vector_usage(); // vector
+    break;
+  case 11:
+    leetcode_pointer_increment();
+    break;
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
   //--- basic-level (< 7 classes)
-  // pointer
   // string- C, C++
   // algorithm - sliding window
   // struct => class (light)
@@ -295,21 +299,22 @@ int addab(int a, int b) {
   return x;
 }
 
-
 void addabNew(int x, int y, int z) // a  b  c
 {
   z = x + y;
 }
 
-void addabPointer(int x, int y, int* z) // a , b, &c
-{ 
-  *z = x + y; 
+void addabPointer(int x, int y, int *z) // a , b, &c
+{
+  *z = x + y;
 }
 
-void addabPointerAlt(int* x, int* y, int* z) // &a , &b, &c
-{ 
-  *z = *x + *y; 
+void addabPointerAlt(int *x, int *y, int *z) // &a , &b, &c
+{
+  *z = *x + *y;
 }
+
+void addabReference(int a, int b, int &c) { c = a + b; }
 
 void baisc_call_by_valye_referece() {
 
@@ -336,18 +341,26 @@ void baisc_call_by_valye_referece() {
   b = 3;
   c = -1;
 
-  addabPointer(a, b, &c); //call-by-reference
+  addabPointer(a, b, &c); // call-by-reference
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
   a = 5;
   b = 3;
   c = -1;
 
-  addabPointerAlt(&a, &b, &c); //call-by-reference
+  addabPointerAlt(&a, &b, &c); // call-by-reference
   printf("a= %d, b= %d, c= %d\n", a, b, c);
 
-  //HW0131(VK) : start from here : "reference"
-  
+  a = 5;
+  b = 3;
+  c = -1;
+  addabReference(a, b, c);
+  printf("a= %d, b= %d, c= %d\n", a, b, c);
+
+  int x = 5;
+  int &y = x; // "reference" type must be initialized
+  y = -1;
+  printf("x= %d\n", x);
 
 #if 0
   // call-by-reference , using pointer
@@ -391,6 +404,24 @@ void basic_pointer_usage() {
     *ptr = 3;
     printf("a = %d\n", a);
   }
+  {
+    int a[5] = {4, 1, 3, 6, 2};
+    //        a[0] a[1] a[2] a[3] a[4]
+
+    // Q: integer pointer "p" to the first element address in a
+    // int* p = &(a[0]);
+    int *p = a;
+
+    // Q: integer pointer "q" to the index-1 element address in a
+    int *q = a + 1; // *(a+1) <==> a[1]
+    //                 a+1    <==> &(a[1])
+
+    printf("q[0]= %d\n", q[0]);   // 1
+    printf("q[3]= %d\n", q[3]);   // 2
+    printf("q[4]= %d\n", q[4]);   // UNKNOWN // memory violation
+    printf("q[-1]= %d\n", q[-1]); // 4
+  }
+  return;
 
   // array : pointer
   {
@@ -450,6 +481,24 @@ void basic_pointer_usage() {
 
 
   */
+}
+
+void leetcode_pointer_increment() {
+
+  // Q: Given an array, sum up all numbers and print out the sum
+  int nums[5] = {3, 1, 5, 4, 2};
+  int nSize = 5;
+
+  int* p = nums;
+  int sum = 0;
+  for (int i = 0; i < nSize; ++i) {
+    sum += *p++;
+  }
+  printf("sum = %d\n", sum);
+
+
+  //  *(&(nums[2])+1)  => 4
+  
 }
 
 void leetcode_shuffle_lists() {
