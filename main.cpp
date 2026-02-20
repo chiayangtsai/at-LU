@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 11;
+  int testID = 12;
 
   switch (testID) {
   case 0:
@@ -50,34 +50,92 @@ int main() {
   case 11:
     leetcode_pointer_increment();
     break;
+  case 12:
+    basic_dynamic_allocation(); // new delete
+    break;
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
-  //--- basic-level (< 7 classes)
-  // string- C, C++
-  // algorithm - sliding window
+  //--- basic-level (1/3)
+  //  --- new delete : dynamic allocation <----- focus
+  // pointer : ".", "->" "object" <------- focus
   // struct => class (light)
+
+  // vector : 1-2 to finish
+  // algorithm - sliding window
+  // string- C, C++ (focus)
   // pair
+  // string - KES algorithm (LUT)
+
+  //--- basic-level (2/3)
   // unordered_map - look-up table (LUT), Hash Table => unordered_set
   // leetcode = two sum
-  // digit representation - decimal
-  // digit representation - binary
+  // sliding window + LUT
+  // digit representation - decimal <------- focus
+  // digit representation - binary <-------- focus
 
-  //<--> 看題庫
-
+  //--- basic-level (3/3)
   // recursive programming => dynamic programming
   // sort() (C++ standard)
   // map : key-sorted map => set
   // binary tree- Breadth-First (BF) creation
+}
 
-  //--- leetcode 150 studay -- finish easy-medium before "stack"
+void basic_dynamic_allocation() {
 
-  //--- advanced-level;
-  // binary tree- depth-first (DF) creation
-  // binary tree - DF traversal : pre-order, in-order, post-order
-  // Sort- Quick sort
-  //(optional) Heap sort, merge sort
+  /*
+    array : pointer with "stack" allocated memory
+  */
+  int a[5]; //<== stack
+  int *p;   //<== pointer without any allocated memory
+  p = &(a[1]);
+
+  /*
+  pointer with a allocated memory : dynamic memory allocation
+
+  */
+  // C++ : array
+  p = new int[6]; // must be released before the memory scope ends
+  int *m = p;
+  m++;
+  delete[] p;
+
+  // C++ : single object : int, char, float ....
+  p = new int;
+  // Q: assign -1 to the memory of p pointing to
+  *p = -1; // p is a pointer, *p is the reference / memory
+
+  printf("P=%d\n", *p);
+
+  delete p;
+
+
+  //HW0219(VK) : dynamic allocation in C language
+  //  malloc(), free()
+  
+
+  /*
+  1 byte = 8 bits
+
+  1 "char" = 1 byte = 8 bits  <====
+     => 2^8 => 256 => -2^7 .... 0 ..... 2^7-1 => -128.. 0.... 127
+                                                        ^^^^^^^^^
+                                                         ASCII 
+  1 "unsigned char" = 1 byte = 8 bits
+    => 0... 2^8-1 => 0... 255
+                                                        
+  1 "short" = 2 bytes = 16 bits
+  1 "int" = 4 bytes = 32 bits <===
+
+  
+  */
+  unsigned char num = 255;
+  num = num + 1;
+  printf("num = %d", (int)num);
+
+  //TBV : int, char->int....
+  
 }
 
 void basic_vector_usage() {
@@ -489,16 +547,14 @@ void leetcode_pointer_increment() {
   int nums[5] = {3, 1, 5, 4, 2};
   int nSize = 5;
 
-  int* p = nums;
+  int *p = nums;
   int sum = 0;
   for (int i = 0; i < nSize; ++i) {
     sum += *p++;
   }
   printf("sum = %d\n", sum);
 
-
   //  *(&(nums[2])+1)  => 4
-  
 }
 
 void leetcode_shuffle_lists() {
