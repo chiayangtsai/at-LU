@@ -12,3 +12,5 @@ void basic_vector_usage();
 void leetcode_alternating_strings();
 void leetcode_pointer_increment();
 void basic_dynamic_allocation();
+void leetcode_time_to_trade_stock();
+void basic_struct_usage();

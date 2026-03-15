@@ -53,17 +53,19 @@ int main() {
   case 12:
     basic_dynamic_allocation(); // new delete
     break;
+  case 14:
+    leetcode_time_to_trade_stock();
+    break;
+  case 15:
+    basic_struct_usage(); //struct
+    break;
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
   //--- basic-level (1/3)
-  //  --- new delete : dynamic allocation <----- focus
-  // pointer : ".", "->" "object" <------- focus
+  // algorithm - sliding window <=== HW
   // struct => class (light)
-
-  // vector : 1-2 to finish
-  // algorithm - sliding window
   // string- C, C++ (focus)
   // pair
   // string - KES algorithm (LUT)
@@ -80,6 +82,86 @@ int main() {
   // sort() (C++ standard)
   // map : key-sorted map => set
   // binary tree- Breadth-First (BF) creation
+
+  //----- leetcode 150 study plan ---------//
+  // easy
+}
+
+
+void basic_struct_usage(){
+ /*
+     
+    2-> 3-> 1-> 0-> 5->
+
+    2->3->1->5
+ 
+ */  
+
+  struct SNODE{
+    int val;
+    SNODE* link;  
+  };
+
+  SNODE oneNode;
+
+  SNODE secondNode;
+  oneNode.val = 2;
+  oneNode.link = &secondNode;
+  //HW0314(VK) start from here.
+  
+}
+
+int maxProfit(vector<int> &prices) {
+  // HW0314
+  return -1;
+}
+
+void leetcode_time_to_trade_stock() {
+  // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description
+
+  /*
+
+You are given an array prices where prices[i] is the price of a given stock on
+the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and
+choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot
+achieve any profit, return 0.
+
+
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit =
+6-1 = 5. Note that buying on day 2 and selling on day 1 is not allowed because
+you must buy before you sell. Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+
+
+Constraints:
+
+1 <= prices.length <= 10^5
+0 <= prices[i] <= 10^4
+
+   */
+
+  vector<int> prices;
+
+  prices = {7, 1, 5, 3, 6, 4};
+  printf("max profit : %d (ans 5)\n", maxProfit(prices));
+
+  prices = {7, 6, 4, 3, 1};
+  printf("max profit : %d (ans 0)\n", maxProfit(prices));
+
+  prices = {7, 2, 6, 9, 5, 1, 3, 6, 4};
+  printf("max profit : %d (ans 7)\n", maxProfit(prices));
 }
 
 void basic_dynamic_allocation() {
@@ -105,15 +187,33 @@ void basic_dynamic_allocation() {
   p = new int;
   // Q: assign -1 to the memory of p pointing to
   *p = -1; // p is a pointer, *p is the reference / memory
-
   printf("P=%d\n", *p);
-
   delete p;
 
+  cout << "----- constructor --------" << endl;
+  p = new int(5);
+  printf("--- %d --\n", *p);
+  delete p;
 
-  //HW0219(VK) : dynamic allocation in C language
+  vector<int> x; // object
+  x.push_back(0);
+  x.push_back(1);
+
+  // x = {0, 1}
+  vector<int> *xp = &x;
+  // Q: use xp to push_back a new element -1
+  //  x => {0, 1, -1}
+
+  (*xp).push_back(-1);
+
+  xp->push_back(-1);
+
+  for (auto it = x.begin(); it != x.end(); it++) {
+    printf("%d\n", *it);
+  }
+
+  cout << "-------- C : malloc, free " << endl;
   //  malloc(), free()
-  
 
   /*
   1 byte = 8 bits
@@ -121,21 +221,28 @@ void basic_dynamic_allocation() {
   1 "char" = 1 byte = 8 bits  <====
      => 2^8 => 256 => -2^7 .... 0 ..... 2^7-1 => -128.. 0.... 127
                                                         ^^^^^^^^^
-                                                         ASCII 
+                                                         ASCII
   1 "unsigned char" = 1 byte = 8 bits
     => 0... 2^8-1 => 0... 255
-                                                        
+
   1 "short" = 2 bytes = 16 bits
   1 "int" = 4 bytes = 32 bits <===
 
-  
+
   */
   unsigned char num = 255;
   num = num + 1;
   printf("num = %d", (int)num);
 
-  //TBV : int, char->int....
-  
+  // Q: allocate 6 integer to a pointer ptr
+  int *ptr = new int[6];
+  delete[] ptr;
+  // empty pointer
+  ptr = nullptr; // C++
+
+  ptr = (int *)malloc(6 * sizeof(int));
+  free(ptr);
+  ptr = NULL; // C
 }
 
 void basic_vector_usage() {
@@ -158,6 +265,7 @@ void basic_vector_usage() {
   //     .empty() : return boolean - true : empty, false: not empty()
   // .push_back(element) : push a new element to the last position
   // .pop_back() : pop out the last element
+  //
   // .front() : the first reference
   // .back() : the last reference
 
