@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 12;
+  int testID = 15;
 
   switch (testID) {
   case 0:
@@ -57,7 +57,7 @@ int main() {
     leetcode_time_to_trade_stock();
     break;
   case 15:
-    basic_struct_usage(); //struct
+    basic_struct_usage(); // struct
     break;
   default:
     printf("not a supported testID %d", testID);
@@ -87,33 +87,162 @@ int main() {
   // easy
 }
 
+void basic_struct_usage() {
+  /*
 
-void basic_struct_usage(){
- /*
-     
-    2-> 3-> 1-> 0-> 5->
+     2-> 3->
 
-    2->3->1->5
- 
- */  
 
-  struct SNODE{
-    int val;
-    SNODE* link;  
-  };
+  */
 
-  SNODE oneNode;
+  cout << "------- v0--------" << endl;
+  {
+    struct SNODE {
+      int val;
+      SNODE *link;
+      bool isEnd;
+    };
 
-  SNODE secondNode;
-  oneNode.val = 2;
-  oneNode.link = &secondNode;
-  //HW0314(VK) start from here.
-  
+    SNODE oneNode;
+    oneNode.val = 2;
+    oneNode.isEnd = false;
+
+    SNODE secondNode;
+    secondNode.val = 3;
+    secondNode.isEnd = true;
+    oneNode.link = &secondNode;
+
+    // Q: Given a head node link, print out all elements in this data chain
+    // (Linked list)
+    SNODE *headPtr = &oneNode;
+    //  2->3->5->3->
+
+    while (true) {
+
+      printf("%d->", headPtr->val); // 1st node: 2->
+
+      // exception
+      if (headPtr->isEnd)
+        break;
+
+      // general
+      headPtr = headPtr->link;
+      /*
+      if(!(*headPtr).isEnd){
+        headPtr = (*headPtr).link; //headptr => 2nd node
+      }
+      else{
+        be
+      }
+      */
+    }
+    printf("\n");
+  }
+
+  cout << "------- v1: use nullptr--------" << endl;
+  {
+    struct SNODE {
+      int val;
+      SNODE *link;
+    };
+
+    SNODE oneNode;
+    oneNode.val = 2;
+    oneNode.link = nullptr;
+
+    SNODE secondNode;
+    secondNode.val = 3;
+    secondNode.link = nullptr;
+
+    oneNode.link = &secondNode;
+
+    // Q: Given a head node link, print out all elements in this data chain
+    // (Linked list)
+    SNODE *headPtr = &oneNode;
+    //  2->3->
+
+    while (true) {
+
+      printf("%d->", headPtr->val); // 1st node: 2->
+
+      // exception
+      if (headPtr->link == nullptr)
+        break;
+
+      // general
+      headPtr = headPtr->link;
+    }
+    printf("\n");
+  }
+
+  cout << "------- v2: use constructor to initiate--------" << endl;
+  {
+    // int* p = int(5);
+    // delete p;
+
+    struct SNODE {
+      int val;
+      SNODE *link;
+
+      SNODE() {
+        val = -1;
+        link = nullptr;
+      }
+
+      SNODE(int v) {
+        val = v;
+        link = nullptr;
+      }
+      // overloading
+      SNODE(int v, SNODE *l) {
+        val = v;
+        link = l;
+      }
+    };
+
+    SNODE secondNode(3);
+    SNODE oneNode(2, &secondNode);
+
+    // SNODE* pNode = new SNODE(5, nullptr);
+
+    // Q: Given a head node link, print out all elements in this data chain
+    // (Linked list)
+    SNODE *headPtr = &oneNode;
+    //  2->3->
+
+    while (true) {
+
+      printf("%d->", headPtr->val); // 1st node: 2->
+
+      // exception
+      if (headPtr->link == nullptr)
+        break;
+
+      // general
+      headPtr = headPtr->link;
+    }
+    printf("\n");
+  }
 }
 
 int maxProfit(vector<int> &prices) {
-  // HW0314
-  return -1;
+  // HW0314 HW0521 : sliding window algorithm
+  int currentbuyprice = 0;
+  int Currentincome = 0;
+  int Hicome = 0;
+
+  for (int i = 0; i < prices.size(); i++) {
+    if (i == 0 || prices[i] <= currentbuyprice) {
+      currentbuyprice = prices[i];
+    } else {
+      Currentincome = prices[i] - currentbuyprice;
+      if (Currentincome >= Hicome) {
+        Hicome = Currentincome;
+      }
+    }
+  }
+
+  return Hicome;
 }
 
 void leetcode_time_to_trade_stock() {
@@ -262,7 +391,7 @@ void basic_vector_usage() {
 
   // https://cplusplus.com/reference/vector/vector/?kw=vector
   // .size() : number of elements
-  //     .empty() : return boolean - true : empty, false: not empty()
+  // .empty() : return boolean - true : empty, false: not empty()
   // .push_back(element) : push a new element to the last position
   // .pop_back() : pop out the last element
   //
