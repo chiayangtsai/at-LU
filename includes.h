@@ -1,3 +1,14 @@
+/*
+  .........................
+     |<-         ->|
+
+  head index : always moving
+  tail index : "conditionally" moving triggered by new condition because of head moving
+
+
+*/
+
+
 void basic_loop();
 void basic_swap();
 void leetcode_bubble_sort();

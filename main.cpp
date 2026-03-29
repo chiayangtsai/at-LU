@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-  int testID = 15;
+  int testID = 14;
 
   switch (testID) {
   case 0:
@@ -57,6 +57,9 @@ int main() {
     leetcode_time_to_trade_stock();
     break;
   case 15:
+    // leetcode_time_to_trade_stock_iii();
+    break;
+  case 16:
     basic_struct_usage(); // struct
     break;
   default:
@@ -65,8 +68,7 @@ int main() {
   }
   //--- basic-level (1/3)
   // algorithm - sliding window <=== HW
-  // struct => class (light)
-  // string- C, C++ (focus)
+  // string- C, C++ (focus) <=== HW0328(VK): start from here next time.
   // pair
   // string - KES algorithm (LUT)
 
@@ -184,6 +186,8 @@ void basic_struct_usage() {
       int val;
       SNODE *link;
 
+
+      //-- constructor --//
       SNODE() {
         val = -1;
         link = nullptr;
@@ -223,6 +227,117 @@ void basic_struct_usage() {
     }
     printf("\n");
   }
+  cout << "------- v3: destructor--------" << endl;
+  {
+    struct SNODE {
+      int val;
+      SNODE *link;
+
+
+      //-- constructor --//
+      SNODE() {
+        val = -1;
+        link = nullptr;
+      }
+
+      SNODE(int v) {
+        val = v;
+        link = nullptr;
+      }
+      // overloading
+      SNODE(int v, SNODE *l) {
+        val = v;
+        link = l;
+      }
+
+      //--- destructor --//
+      ~SNODE(){
+        if(link != nullptr){
+          delete link;
+        }
+      }
+    
+    };
+
+    
+    //Q: create a linked list; given k, create a list like the follows:
+    // 0->1->2->3......->k
+    int k = 6;
+    
+    SNODE* head = new SNODE(0); //0->
+    SNODE* ptr = head->link;
+
+    for(int i=1; i<= k; i++){      
+      ptr = new SNODE(i); //0->1->2-> ...->k->     
+      ptr = ptr->link;
+    }    
+    
+    // 0-> 1-> 2.....-> k->
+    // ^^^ ^^^ ^^^^     ^^^^
+    //     k+1 nodes
+    delete head;
+
+    //--- use vector
+    vector<SNODE> vNodes(k);
+    for(int i=0; i<=k; i++){
+      vNodes[i].val = i;
+
+      if(i< k)
+        vNodes[i].link = &(vNodes[i+1]);
+    }
+    
+  }
+
+
+  
+}
+
+/*
+       0  1  2  3  4  5  6  7  8 <== day
+       7, 2, 6, 9, 5, 1, 3, 6, 4 <== price
+          h (賣)
+       t
+profit 0     4  7  3     2  5  3
+maxP   0     4  7  7     7  7  7 <==
+
+*/
+
+int maxProfitAlt(vector<int> &prices) {
+  int maxP = 0;
+  int t = 0;
+  int profit = 0;
+
+  for (int h = 1; h < prices.size(); h++) {
+    if (prices[h] > prices[t]) {
+      profit = prices[h] - prices[t];
+      if (profit > maxP) {
+        maxP = profit;
+      }
+    } else // move tail index
+    {
+      t = h;
+    }
+  }
+
+  return maxP;
+}
+
+/*
+       0  1  2  3  4  5  6  7  8 <== day
+       7, 2, 6, 9, 5, 1, 3, 6, 4 <== price
+       h(買)
+                t
+profit 2  7  3     1  5  3     0
+maxP   7  7  5     5  5  3     0
+       ^^
+*/
+
+int maxProfitRL(vector<int> &prices) {
+  int maxP = 0;
+  int t = 0;
+  // HW0328
+
+  return maxP;
 }
 
 int maxProfit(vector<int> &prices) {
@@ -283,6 +398,7 @@ Constraints:
 
   vector<int> prices;
 
+  printf("-----v0 ------ \n");
   prices = {7, 1, 5, 3, 6, 4};
   printf("max profit : %d (ans 5)\n", maxProfit(prices));
 
@@ -291,6 +407,26 @@ Constraints:
 
   prices = {7, 2, 6, 9, 5, 1, 3, 6, 4};
   printf("max profit : %d (ans 7)\n", maxProfit(prices));
+
+  printf("-----v1 ------ \n");
+  prices = {7, 1, 5, 3, 6, 4};
+  printf("max profit : %d (ans 5)\n", maxProfitAlt(prices));
+
+  prices = {7, 6, 4, 3, 1};
+  printf("max profit : %d (ans 0)\n", maxProfitAlt(prices));
+
+  prices = {7, 2, 6, 9, 5, 1, 3, 6, 4};
+  printf("max profit : %d (ans 7)\n", maxProfitAlt(prices));
+
+  printf("-----v2: R->L ------ \n");
+  prices = {7, 1, 5, 3, 6, 4};
+  printf("max profit : %d (ans 5)\n", maxProfitRL(prices));
+
+  prices = {7, 6, 4, 3, 1};
+  printf("max profit : %d (ans 0)\n", maxProfitRL(prices));
+
+  prices = {7, 2, 6, 9, 5, 1, 3, 6, 4};
+  printf("max profit : %d (ans 7)\n", maxProfitRL(prices));
 }
 
 void basic_dynamic_allocation() {
