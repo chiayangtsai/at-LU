@@ -1,4 +1,5 @@
 #include "includes.h"
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -14,7 +15,7 @@
 using namespace std;
 
 int main() {
-  int testID = 14;
+  int testID = 21;
 
   switch (testID) {
   case 0:
@@ -57,20 +58,33 @@ int main() {
     leetcode_time_to_trade_stock();
     break;
   case 15:
-    // leetcode_time_to_trade_stock_iii();
+    leetcode_time_to_trade_stock_ii(); //<=== after HW0407
     break;
   case 16:
     basic_struct_usage(); // struct
     break;
+  case 17:
+    basic_string_usage(); // string
+    break;
+  case 18:
+    leetcode_alphabet_histogram(); // KES
+    break;
+  case 19:
+    basic_time_compolexity();
+    break;
+  case 20:
+    leetcode_time_to_trade_stock_iii();
+    break;
+  case 21:
+    basic_pair_usage(); // pair
+    break;
+
   default:
     printf("not a supported testID %d", testID);
     exit(-1);
   }
   //--- basic-level (1/3)
-  // algorithm - sliding window <=== HW
-  // string- C, C++ (focus) <=== HW0328(VK): start from here next time.
   // pair
-  // string - KES algorithm (LUT)
 
   //--- basic-level (2/3)
   // unordered_map - look-up table (LUT), Hash Table => unordered_set
@@ -86,7 +100,128 @@ int main() {
   // binary tree- Breadth-First (BF) creation
 
   //----- leetcode 150 study plan ---------//
-  // easy
+  // easy -> medium
+  // before "stack"
+
+  //----- advanced-level ------------//
+  // data structure & advanced algorithm
+}
+
+void basic_pair_usage() {
+  /*
+     John
+     90
+  */
+  vector<string> names = {"John", "Mary", "Jay"};
+  vector<int> scores = {95, 70, 98};
+
+  struct SNameData {
+    string name;
+    int score;
+  };
+
+  // vector<SNameData> sData;
+  /*
+    std::make_pair(type1, type2) <=== HW0411(VK) start from here.
+  
+  */
+
+  vector<pair<string, int>> sData;
+  for(int i=0; i< names.size(); i++){
+    string name = names[i];
+    int score = scores[i];
+
+    pair<string, int> tmpObj;
+    tmpObj.first = name;
+    tmpObj.second = score;    
+    sData.push_back(tmpObj);
+    
+  }
+
+  
+  
+}
+
+void basic_time_compolexity() {
+  /*
+        #     time
+  A    10      1     <== O(N^2)
+       20      4
+       30      9
+       40     16
+
+  B    10      2   <== O(N)
+       20      4
+       30      6
+       40      8
+
+
+  If a horizontal line : O(1)
+
+  */
+}
+
+void leetcode_alphabet_histogram() {
+  string ss = "    &%h#aa( z 90A ch";
+  /*
+  Q: find the histogram of the lower-case alphabet and print out in the
+  following format (following a->z order)
+
+  a 2
+  c 1
+  h 2
+  z 1
+
+  time complexity  : O(N)
+  space complexity : O(1)
+
+  */
+  // HW0407
+
+  vector<int> tab(26, 0); // look-up table :     alphabet <-> show times
+  //                                            alphabet <-> ascii index <->
+  //                                            show times
+  //                                                         ^^^^^^^^^^^^^
+  //                                                         ^^^^^^^^^^^
+  //                                                          key value  <==
+  //                                                          pair
+  //  KES algorithm
+
+  // Step 1: collect statistics   : O(N)
+  int i = 0;
+  while (i != ss.size()) {
+    if (ss[i] >= 'a' && ss[i] <= 'z') {
+      int index = ss[i] - 'a';
+      tab[index]++;
+    }
+    i++;
+  }
+
+  // Step 2: analyze the statistics | raw data with statistics
+
+  for (char c = 'a'; c <= 'z'; c++) // O(1)
+  {
+
+    if (tab[c - 'a'] > 0) {
+      printf("%c  %d\n", c, tab[c - 'a']);
+    }
+  }
+
+#if 0  
+  string output; // "haazch"
+  int i = 0;
+
+  while (i != ss.size()) {
+    if ((ss[i] >= 'a' && ss[i] <= 'z') {
+      output.push_back(ss[i]);
+    }
+    i++;
+  }
+
+  for (auto &x : output) {
+    printf("%c", x);
+  }
+#endif
 }
 
 void basic_struct_usage() {
@@ -186,7 +321,6 @@ void basic_struct_usage() {
       int val;
       SNODE *link;
 
-
       //-- constructor --//
       SNODE() {
         val = -1;
@@ -233,7 +367,6 @@ void basic_struct_usage() {
       int val;
       SNODE *link;
 
-
       //-- constructor --//
       SNODE() {
         val = -1;
@@ -251,27 +384,25 @@ void basic_struct_usage() {
       }
 
       //--- destructor --//
-      ~SNODE(){
-        if(link != nullptr){
+      ~SNODE() {
+        if (link != nullptr) {
           delete link;
         }
       }
-    
     };
 
-    
-    //Q: create a linked list; given k, create a list like the follows:
-    // 0->1->2->3......->k
+    // Q: create a linked list; given k, create a list like the follows:
+    //  0->1->2->3......->k
     int k = 6;
-    
-    SNODE* head = new SNODE(0); //0->
-    SNODE* ptr = head->link;
 
-    for(int i=1; i<= k; i++){      
-      ptr = new SNODE(i); //0->1->2-> ...->k->     
+    SNODE *head = new SNODE(0); // 0->
+    SNODE *ptr = head->link;
+
+    for (int i = 1; i <= k; i++) {
+      ptr = new SNODE(i); // 0->1->2-> ...->k->
       ptr = ptr->link;
-    }    
-    
+    }
+
     // 0-> 1-> 2.....-> k->
     // ^^^ ^^^ ^^^^     ^^^^
     //     k+1 nodes
@@ -279,17 +410,78 @@ void basic_struct_usage() {
 
     //--- use vector
     vector<SNODE> vNodes(k);
-    for(int i=0; i<=k; i++){
+    for (int i = 0; i <= k; i++) {
       vNodes[i].val = i;
 
-      if(i< k)
-        vNodes[i].link = &(vNodes[i+1]);
+      if (i < k)
+        vNodes[i].link = &(vNodes[i + 1]);
     }
-    
   }
+}
+
+int maxProfit_iii(vector<int> &prices) {
+  // HW0411
+  // time complexity requirement : at least O(N^2), best O(N)
+  return -1;
+}
+
+void leetcode_time_to_trade_stock_iii() {
+  // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/
+
+  /*
+    You are given an array prices where prices[i] is the price of a given stock
+  on the ith day.
+
+  Find the maximum profit you can achieve. You may complete at most two
+  transactions.
+
+  Note: You may not engage in multiple transactions simultaneously (i.e., you
+  must sell the stock before you buy again).
 
 
-  
+
+  Example 1:
+
+  Input: prices = [3,3,5,0,0,3,1,4]
+  Output: 6
+  Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit =
+  3-0 = 3. Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit =
+  4-1 = 3. Example 2:
+
+  Input: prices = [1,2,3,4,5]
+  Output: 4
+  Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit =
+  5-1 = 4. Note that you cannot buy on day 1, buy on day 2 and sell them later,
+  as you are engaging multiple transactions at the same time. You must sell
+  before buying again. Example 3:
+
+  Input: prices = [7,6,4,3,1]
+  Output: 0
+  Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+
+  Constraints:
+
+  1 <= prices.length <= 105
+  0 <= prices[i] <= 105
+
+  */
+  vector<int> prices;
+
+  prices = {1, 3, 5, 4, 3, 7, 6, 9, 2, 4};
+  printf("max profit : %d (ans 10)\n\n", maxProfit_iii(prices));
+
+  prices = {1, 2, 4, 2, 5, 7, 2, 4, 9, 0};
+  printf("max profit : %d (ans 13)\n\n", maxProfit_iii(prices));
+
+  prices = {3, 3, 5, 0, 0, 3, 1, 4};
+  printf("max profit : %d (ans 6)\n\n", maxProfit_iii(prices));
+
+  prices = {1, 2, 3, 4, 5};
+  printf("max profit : %d (ans 4)\n\n", maxProfit_iii(prices));
+
+  prices = {7, 6, 4, 3, 1};
+  printf("max profit : %d (ans 0)\n\n", maxProfit_iii(prices));
 }
 
 /*
@@ -334,8 +526,23 @@ maxP   7  7  5     5  5  3     0
 
 int maxProfitRL(vector<int> &prices) {
   int maxP = 0;
-  int t = 0;
+  int t = prices.size() - 1;
+  int profit = 0;
   // HW0328
+  // HW0407
+
+  for (int h = prices.size() - 2; h > 0; h--) {
+    if (prices[h] < prices[t]) {
+
+      profit = prices[t] - prices[h];
+
+      if (profit > maxP) {
+        maxP = profit;
+      }
+    } else {
+      t = h;
+    }
+  }
 
   return maxP;
 }
@@ -358,6 +565,19 @@ int maxProfit(vector<int> &prices) {
   }
 
   return Hicome;
+}
+
+void leetcode_time_to_trade_stock_ii() {
+
+  vector<int> prices;
+
+  printf("-----v2: R->L ------ \n");
+  prices = {7, 1, 5, 3, 6, 4};
+  printf("max profit : %d (ans 5)\n", maxProfitRL(prices));
+  prices = {7, 6, 4, 3, 1};
+  printf("max profit : %d (ans 0)\n", maxProfitRL(prices));
+  prices = {7, 2, 6, 9, 5, 1, 3, 6, 4};
+  printf("max profit : %d (ans 7)\n", maxProfitRL(prices));
 }
 
 void leetcode_time_to_trade_stock() {
@@ -541,6 +761,8 @@ void basic_vector_usage() {
   // .insert(iterator pos, element) : insert the "element" to the "iterator pos"
   // .insert(iterator pos, source starting iterator, source ending iterator)
 
+  // reverse(start iterator, end iterator)
+
   printf("=== push_back() === \n");
   {
     vector<int> a;
@@ -719,9 +941,79 @@ void basic_string_usage() {
 
   // strcpy(dest address, source address)
   strcpy(tmp, name);
-  printf("%s", tmp);
+  printf("%s\n", tmp);
 
-  // TBV : C++
+  cout << "---- c++ -------" << endl;
+  // vector<char> a = {'J', 'o', 'h', 'n'}
+  string a = "John";
+
+  /*
+     .size() :   length of the string
+      => .length()
+
+      .push_)back() : append new char to the end of string
+      .begin(), .end()
+
+
+      .c_str() : convert c++ string to c style string
+
+      std::to_string(<data type>) : convert to string
+      std::stoi(string) : convert string to integer
+
+      std::reverse(start iterator, end iterator)
+
+      .substr(start position, length)
+         ==>  .substr(start position)  to the last one
+
+  */
+
+  a.push_back('y');
+  printf("%s\n", a.c_str());
+
+  // Q: print out every charactor in a
+  //  J
+  //  o
+  //  h
+  //  n
+  //  y
+
+  for (auto it = a.begin(); it != a.end(); it++) {
+    printf("%c\n", *it);
+  }
+
+  for (auto &x : a) {
+    printf("%c\n", x);
+  }
+
+  string tmp1 = "7685";
+
+  int tmpint = stoi(tmp1);
+
+  cout << tmpint << endl;
+
+  // Q: revert the digits order of an integer
+  int num = 89762;
+  // => num = 26798
+  string numstring = to_string(num);
+  string newnumstring;
+  for (auto it = numstring.end() - 1; it >= numstring.begin(); it--) {
+    newnumstring.push_back(*it);
+  }
+  num = stoi(newnumstring);
+  cout << num << endl;
+
+  cout << "---- std::reverse()------" << endl;
+
+  reverse(numstring.begin(), numstring.end());
+  cout << numstring << endl;
+
+  cout << "---- .substr() -----" << endl;
+  string name2 = "Johny";
+  //               ^^^
+  string substr = name2.substr(1, 3);
+  cout << substr << endl;
+
+  cout << name2.substr(2) << endl;
 }
 
 int addab(int a, int b) {

@@ -3,11 +3,11 @@
      |<-         ->|
 
   head index : always moving
-  tail index : "conditionally" moving triggered by new condition because of head moving
+  tail index : "conditionally" moving triggered by new condition because of head
+  moving
 
 
 */
-
 
 void basic_loop();
 void basic_swap();
@@ -25,3 +25,11 @@ void leetcode_pointer_increment();
 void basic_dynamic_allocation();
 void leetcode_time_to_trade_stock();
 void basic_struct_usage();
+void basic_string_usage();
+void leetcode_alphabet_histogram();
+void basic_time_compolexity();
+void leetcode_time_to_trade_stock_ii();
+
+void leetcode_time_to_trade_stock_iii();
+
+void basic_pair_usage();
